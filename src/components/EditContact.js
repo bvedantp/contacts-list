@@ -1,8 +1,13 @@
 /* eslint-disable no-restricted-globals */
 import React from "react"
 import { TasksContext, TasksDispatchContext } from '../TasksContext'
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { storage } from "./firebase/app"
+import GlobalStyles from "./styles/Global";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faFileImage, faCloudArrowUp, faCircleXmark } from "@fortawesome/free-solid-svg-icons"
+import { HeadLine, FormStyle, ForCenter, CustomFileSelect, UploadSpace, SubmitBtn, CheckBoxDiv, CloseBtn } from "./styles/AddContact.styled"
+
 
 const TYPECONTACT = [
     "personal",
@@ -66,18 +71,34 @@ export default function EditContact() {
         )
     }
     return(
-        <form>
-            <input name="name" type="text" onChange={updateNewState} value={newState.name} />
-            <input name="phone" type="tel" onChange={updateNewState} value={newState.phone} />
-            <select name="type" onChange={updateNewState} value={newState.type} >
-                {TYPECONTACT.map((item, index)=> {
-                    return <option key={index} value={item}>{item}</option>
-                })}
-            </select>
-            <input name="isWhatsapp" type="checkbox" onChange={updateNewState} checked={newState.isWhatsapp} />
-            <input name="profilePicture" type="file" aria-label="profile-picture" onChange={updateImage} />
-            <button onClick={uploadImage}>Upload Pic</button>
-            <Link to="/" onClick={formSubmit}>Submit</Link>
-        </form>
+        <ForCenter>
+            <GlobalStyles />
+            <HeadLine>
+                <h1><b>Edit</b> <br/>Contact</h1>
+            </HeadLine>
+            <FormStyle>
+                <CloseBtn to="/" ><FontAwesomeIcon icon={faCircleXmark} /></CloseBtn>
+                <label htmlFor="name">Name:</label>
+                <input name="name" type="text" onChange={updateNewState} value={newState.name} />
+                <label htmlFor="phone">Phone No.:</label>
+                <input name="phone" type="tel" onChange={updateNewState} value={newState.phone} />
+                <label htmlFor="type">Type:</label>
+                <select name="type" onChange={updateNewState} value={newState.type} >
+                    {TYPECONTACT.map((item, index)=> {
+                        return <option key={index} value={item}>{item}</option>
+                    })}
+                </select>
+                <CheckBoxDiv>
+                    <label htmlFor="isWhatsapp">Whatsapp</label>
+                    <input name="isWhatsapp" type="checkbox" onChange={updateNewState} checked={newState.isWhatsapp} />
+                </CheckBoxDiv>
+                <UploadSpace>
+                    <CustomFileSelect htmlFor="profilePicture"><FontAwesomeIcon icon={faFileImage} /> | Update Pic</CustomFileSelect>    
+                    <input id="profilePicture" name="profilePicture" type="file" aria-label="profile-picture" onChange={updateImage} />
+                    <button onClick={uploadImage}><FontAwesomeIcon icon={faCloudArrowUp} /> | Upload</button>
+                </UploadSpace>
+                <SubmitBtn to="/" onClick={formSubmit}>Submit</SubmitBtn>
+            </FormStyle>
+        </ForCenter>
     )
 }
