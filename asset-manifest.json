@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/contacts-list/static/js/main.3ed7a265.js",
+    "main.js": "/contacts-list/static/js/main.8ee23d07.js",
     "index.html": "/contacts-list/index.html",
-    "main.3ed7a265.js.map": "/contacts-list/static/js/main.3ed7a265.js.map"
+    "main.8ee23d07.js.map": "/contacts-list/static/js/main.8ee23d07.js.map"
   },
   "entrypoints": [
-    "static/js/main.3ed7a265.js"
+    "static/js/main.8ee23d07.js"
   ]
 }
