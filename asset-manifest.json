@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/contacts-list/static/js/main.456a6fee.js",
+    "index.html": "/contacts-list/index.html",
+    "main.456a6fee.js.map": "/contacts-list/static/js/main.456a6fee.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.456a6fee.js"
+  ]
+}
