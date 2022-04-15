@@ -16,10 +16,10 @@ export default function Home() {
         <div>
             <h1>Home</h1>
             {(Array.isArray(currentState) && currentState.length) ? currentState.map((item,index) => {
-        return(
-            <Card key={index} id={item.id} name={item.name} phone={item.phone} type={item.type} isWhatsapp={item.isWhatsapp} />
-        )
-    }) : <p>No Contacts Saved</p>}
+                return(
+                    <Card key={index} id={item.id} name={item.name} phone={item.phone} type={item.type} isWhatsapp={item.isWhatsapp} profilePicture={item.profilePicture} />
+                )
+            }) : <p>No Contacts Saved</p>}
             
             <Link to="/add-contact">Add Contact</Link>
         </div>

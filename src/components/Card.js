@@ -7,6 +7,7 @@ export default function Card(props) {
 
     return(
         <div>
+            <img src={props.profilePicture} alt="fire" />
             <h4>{props.name}</h4>
             <p>{props.phone}</p>
             <p>{props.type}</p>

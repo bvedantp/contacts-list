@@ -1,8 +1,9 @@
 /* eslint-disable no-restricted-globals */
 import React from "react"
-import { TasksContext, TasksDispatchContext } from '../TasksContext'
+import { TasksDispatchContext } from '../TasksContext'
 import { Link } from "react-router-dom"
 import uuid from 'react-uuid'
+import { storage } from "./firebase/app"
 
 const TYPECONTACT = [
     "personal",
@@ -37,7 +38,41 @@ export default function AddContact() {
         event.preventDefault()
         dispatch({type:"inputToMain", addContact: singleContact})
     }
-    console.log(singleContact)
+    //console.log(singleContact)
+    const [image, setImage] = React.useState("")
+
+    function updateImage(event) {
+        if(event.target.files[0]){
+            setImage(event.target.files[0])
+        }
+    }
+
+    function uploadImage() {
+        event.preventDefault()
+        const uploadTask = storage.ref(`images/${image.name}`).put(image)
+        uploadTask.on(
+            "state_changed",
+            snapshot => {},
+            error => {
+                console.log(error)
+            },
+            () => {
+                storage
+                    .ref("images")
+                    .child(image.name)
+                    .getDownloadURL()
+                    .then(url => {
+                       // console.log(url)
+                        setSingleContact(prevContact => {
+                            return {
+                                ...prevContact,
+                                profilePicture: url
+                            }
+                        })
+                    })
+            }
+        )
+    }
 
     return(
         <form>
@@ -49,7 +84,8 @@ export default function AddContact() {
                 })}
             </select>
             <input name="isWhatsapp" type="checkbox" onChange={updateContact} />
-            <input name="profilePicture" type="file" aria-label="profile-picture" onChange={updateContact} />
+            <input name="profilePicture" type="file" aria-label="profile-picture" onChange={updateImage} />
+            <button onClick={uploadImage}>Upload Pic</button>
             <Link to="/" onClick={formSubmit}>Submit</Link>
         </form>
     )

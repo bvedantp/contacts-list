@@ -2,6 +2,7 @@
 import React from "react"
 import { TasksContext, TasksDispatchContext } from '../TasksContext'
 import { Link, useParams } from "react-router-dom"
+import { storage } from "./firebase/app"
 
 const TYPECONTACT = [
     "personal",
@@ -30,7 +31,40 @@ export default function EditContact() {
         dispatch({type:"editTheMain", updatedState: newState, currId: id})
     }
     //console.log(singleContact)
-    
+    const [image, setImage] = React.useState("")
+
+    function updateImage(event) {
+        if(event.target.files[0]){
+            setImage(event.target.files[0])
+        }
+    }
+
+    function uploadImage() {
+        event.preventDefault()
+        const uploadTask = storage.ref(`images/${image.name}`).put(image)
+        uploadTask.on(
+            "state_changed",
+            snapshot => {},
+            error => {
+                console.log(error)
+            },
+            () => {
+                storage
+                    .ref("images")
+                    .child(image.name)
+                    .getDownloadURL()
+                    .then(url => {
+                       // console.log(url)
+                        setNewState(prevState => {
+                            return {
+                                ...prevState,
+                                profilePicture: url
+                            }
+                        })
+                    })
+            }
+        )
+    }
     return(
         <form>
             <input name="name" type="text" onChange={updateNewState} value={newState.name} />
@@ -41,7 +75,8 @@ export default function EditContact() {
                 })}
             </select>
             <input name="isWhatsapp" type="checkbox" onChange={updateNewState} checked={newState.isWhatsapp} />
-            <input name="profilePicture" type="file" aria-label="profile-picture" onChange={updateNewState} />
+            <input name="profilePicture" type="file" aria-label="profile-picture" onChange={updateImage} />
+            <button onClick={uploadImage}>Upload Pic</button>
             <Link to="/" onClick={formSubmit}>Submit</Link>
         </form>
     )

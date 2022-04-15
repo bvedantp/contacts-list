@@ -11,7 +11,7 @@ import EditContact from "./components/EditContact";
 const RouteSwitch = ()=> {
     // basename="/contact-list" for browserRouter
     return(
-        <BrowserRouter> 
+        <BrowserRouter basename="/contacts-list" > 
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/add-contact" element={<AddContact />} />
